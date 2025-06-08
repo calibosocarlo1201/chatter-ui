@@ -1,5 +1,7 @@
 import { Button, Stack, TextField } from "@mui/material"
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useGetMe } from "../../hooks/useGetMe";
+import { useNavigate } from "react-router-dom";
 
 interface AuthProps {
     submitLabel: string
@@ -12,6 +14,14 @@ const Auth = ({submitLabel, onSubmit, children, error}: AuthProps) => {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const { data } = useGetMe();
+    const navigate = useNavigate()
+
+    useEffect(() => {
+      if(data) {
+        navigate('/')
+      }
+    }, [data, navigate])
 
   return (
     <Stack spacing={3} sx={{height: "100vh", maxWidth: {
